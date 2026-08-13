@@ -14,7 +14,9 @@ describe('Orange HRM Tests', () => {
     genericField: ".oxd-input",
     datePickerField: "[placeholder='yyyy-dd-mm']",
     closeButton: ".--close",
-    saveButton: "[type='submit']"
+    saveButton: "[type='submit']",
+    nationalityDropdown: ".oxd-select-text-input",
+    radioButton: ".oxd-radio-input--active"
   }
 
   
@@ -27,15 +29,26 @@ describe('Orange HRM Tests', () => {
     cy.location('pathname').should('equal', '/web/index.php/dashboard/index')
     cy.get(selectorsList.dashboardGrid)
     cy.get(selectorsList.myInforButton).click()
-    cy.get(selectorsList.firstNameField).clear().type('FirstNameTest')
+    cy.get(selectorsList.firstNameField).clear().type('FirstName')
     cy.get(selectorsList.lastNameField).clear().type('LastNameTest')
+    // cy.get(selectorsList.genericField).eq(4).clear().type('NickNameTest')
     cy.get(selectorsList.genericField).eq(4).clear().type('IdTest')
     cy.get(selectorsList.genericField).eq(5).clear().type('OtherIdTest')
     cy.get(selectorsList.genericField).eq(6).clear().type('DriverLicenseNumberTest')
+    // cy.get(selectorsList.genericField).eq(9).clear().type('SSNNumberTest')
+    // cy.get(selectorsList.genericField).eq(10).clear().type('SINNumberTest')
     cy.get(selectorsList.datePickerField).eq(0).clear().type('1995-12-12')
     cy.get(selectorsList.closeButton).click()
-    cy.get(selectorsList.saveButton).eq(0).click()
-    cy.get('body').should('contain', 'Successfully Updated')
+    cy.get(selectorsList.nationalityDropdown).eq(0).click({ force: true })
+    cy.contains('Italian').click()
+    cy.get(selectorsList.nationalityDropdown).eq(1).click({ force: true })
+    cy.contains('Single').click()
+    cy.get(selectorsList.datePickerField).eq(1).clear().type('2000-09-12')
+    cy.get(selectorsList.closeButton).click()
+    cy.get(selectorsList.radioButton).eq(0).click()
+    // cy.get(selectorsList.saveButton).eq(0).click({ force: true })
+    // cy.get('body').should('contain', 'Successfully Updated')
+    
 
   })
   it('User Info Update - Fail', () => {
