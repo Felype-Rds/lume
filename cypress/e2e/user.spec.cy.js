@@ -1,25 +1,13 @@
 import userData from '../fixtures/users/userData.json'
 import LoginPage from '../pages/loginPage'
 import DashboardPage from '../pages/dashboardPage'
+import MenuPage from '../pages/MenuPage'
 import MyInfoPage from '../pages/myInfoPage'
-import SavePage from '../pages/saveMyInfoPage'
 
 const loginPage = new LoginPage()
 const dashboardPage = new DashboardPage()
+const menuPage = new MenuPage()
 const myInfoPage = new MyInfoPage()
-const savePage = new SavePage()
-const firstName = 'NameTest'
-const lastName = 'LastNameTest'
-// const nickName = 'NickNameTest'
-const idTest = 'IdTest'
-const otherId = 'OtherIdTest'
-const driverLicenseNumber = 'NumberTest'
-// const ssnNumber = 'SSNNumberTest'
-// const sinNumber = 'SINNumberTest'
-const dateLicense = '1995-12-12'
-const nationality = 'Italian'
-const marital = 'Single'
-const dateBirth = '2000-09-12'
 
 describe('Orange HRM Tests', () => {
 
@@ -27,27 +15,18 @@ describe('Orange HRM Tests', () => {
   it.only('User Info Update - Success', () => {
     loginPage.accessLoginPage()
     loginPage.loginWithUser(userData.userSucess.username, userData.userSucess.password)
-    dashboardPage.accessDashboardPage()
-    myInfoPage.accessMyInfoPage()
-    myInfoPage.formFieldsMyInfo(
-        firstName, 
-        lastName, 
-        // nickName, 
-        idTest, 
-        otherId, 
-        driverLicenseNumber, 
-        // ssnNumber, 
-        // sinNumber, 
-        dateLicense, 
-        nationality, 
-        marital, 
-        dateBirth
-      )
-    savePage.saveMyInfo()
-    savePage.validateSuccessMassage()
-  
 
+    dashboardPage.accessDashboardPage()
+
+    menuPage.menuPage()
+
+    myInfoPage.fillPersonalDatails('NameTest','LastNameTest')
+    myInfoPage.fillEmployId('IdTest','OtherIdTest','NumberTest','1995-12-12')
+    myInfoPage.fillStatus('Italian','Single','2000-09-12')
+    myInfoPage.saveForm()
   })
+
+
   it('User Info Update - Fail', () => {
     cy.visit('/auth/login')
     cy.get(selectorsList.usernameField).type(userData.userFail.username)
