@@ -2,13 +2,18 @@ class MenuPage {
 
     selectorsList() {
         const selectorsList = {
-            myInforButton: '[href="/web/index.php/pim/viewMyDetails"]',
+            myInfoButton: '[href="/web/index.php/pim/viewMyDetails"]',
+            performanceButton: '[href="/web/index.php/performance/viewPerformanceModule"]'
         }
         return selectorsList
     }
 
-    menuPage() {
-        cy.get(this.selectorsList().myInforButton).click()
+    accessMyInfo() {
+        cy.get(this.selectorsList().myInfoButton).click()
+    }
+
+    accessPerformance() {
+        cy.get(this.selectorsList().performanceButton).click()
     }
 }
 
